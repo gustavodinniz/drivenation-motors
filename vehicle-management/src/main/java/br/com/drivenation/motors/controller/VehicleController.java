@@ -3,6 +3,7 @@ package br.com.drivenation.motors.controller;
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
 import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
+import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.service.VehicleService;
 import jakarta.inject.Inject;
@@ -43,5 +44,12 @@ public class VehicleController {
     @ResponseStatus(200)
     public UpdateVehicleResponse updateVehicle(@PathParam("id") ObjectId id, UpdateVehicleRequest updateVehicleRequest) {
         return vehicleService.updateVehicle(id, updateVehicleRequest);
+    }
+
+    @GET
+    @Path("/{id}")
+    @ResponseStatus(200)
+    public GetVehicleByIdResponse getVehicleById(@PathParam("id") ObjectId id) {
+        return vehicleService.getVehicleById(id);
     }
 }

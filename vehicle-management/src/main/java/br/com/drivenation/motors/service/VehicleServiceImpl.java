@@ -3,6 +3,7 @@ package br.com.drivenation.motors.service;
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
 import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
+import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.entity.VehicleEntity;
 import br.com.drivenation.motors.repository.VehicleRepository;
@@ -47,19 +48,29 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public UpdateVehicleResponse updateVehicle(ObjectId id, UpdateVehicleRequest updateVehicleRequest) {
-        log.info("Finding vehicle with id: {}", id);
-        VehicleEntity vehicleEntity = Optional.ofNullable(vehicleRepository.findById(id)).orElseThrow(() -> {
-            log.error("Vehicle not found!");
-            return new NotFoundException();
-        });
-
-        log.info("Vehicle found.");
+        VehicleEntity vehicleEntity = findVehicleById(id);
         updateVehicle(updateVehicleRequest, vehicleEntity);
 
         vehicleRepository.update(vehicleEntity);
         log.info("Vehicle updated.");
 
         return UpdateVehicleResponse.valueOf(vehicleEntity);
+    }
+
+    @Override
+    public GetVehicleByIdResponse getVehicleById(ObjectId id) {
+        VehicleEntity vehicleEntity = findVehicleById(id);
+        return GetVehicleByIdResponse.valueOf(vehicleEntity);
+    }
+
+    private VehicleEntity findVehicleById(ObjectId id) {
+        log.info("Finding vehicle with id: {}", id);
+        VehicleEntity vehicleEntity = Optional.ofNullable(vehicleRepository.findById(id)).orElseThrow(() -> {
+            log.error("Vehicle not found!");
+            return new NotFoundException();
+        });
+        log.info("Vehicle found.");
+        return vehicleEntity;
     }
 
     private void updateVehicle(UpdateVehicleRequest updateVehicleRequest, VehicleEntity vehicleEntity) {
