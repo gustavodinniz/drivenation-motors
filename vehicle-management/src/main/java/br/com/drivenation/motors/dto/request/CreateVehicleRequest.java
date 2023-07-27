@@ -24,7 +24,7 @@ public class CreateVehicleRequest {
 
     private String chassisNumber;
 
-    private BigDecimal price;
+    private Double price;
 
     private VehicleStatus status;
 

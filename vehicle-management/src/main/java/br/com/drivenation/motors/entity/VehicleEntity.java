@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
-import java.math.BigDecimal;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -29,7 +27,7 @@ public class VehicleEntity {
 
     private String chassisNumber;
 
-    private BigDecimal price;
+    private Double price;
 
     private VehicleStatus status;
 }
