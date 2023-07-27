@@ -7,6 +7,7 @@ import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.service.VehicleService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import org.bson.types.ObjectId;
 import org.jboss.resteasy.reactive.ResponseStatus;
@@ -21,7 +22,7 @@ public class VehicleController {
 
     @POST
     @ResponseStatus(201)
-    public void createVehicle(CreateVehicleRequest createVehicleRequest) {
+    public void createVehicle(@Valid CreateVehicleRequest createVehicleRequest) {
         vehicleService.createVehicle(createVehicleRequest);
     }
 
