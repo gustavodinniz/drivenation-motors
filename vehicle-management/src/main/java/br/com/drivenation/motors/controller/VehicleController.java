@@ -1,7 +1,9 @@
 package br.com.drivenation.motors.controller;
 
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
+import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
+import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.service.VehicleService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -33,5 +35,13 @@ public class VehicleController {
     @ResponseStatus(204)
     public void deleteVehicle(@PathParam("id") ObjectId id) {
         vehicleService.deleteVehicle(id);
+    }
+
+
+    @PUT
+    @Path("/{id}")
+    @ResponseStatus(200)
+    public UpdateVehicleResponse updateVehicle(@PathParam("id") ObjectId id, UpdateVehicleRequest updateVehicleRequest) {
+        return vehicleService.updateVehicle(id, updateVehicleRequest);
     }
 }

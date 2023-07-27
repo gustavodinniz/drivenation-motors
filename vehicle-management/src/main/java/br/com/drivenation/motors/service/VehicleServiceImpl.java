@@ -1,15 +1,19 @@
 package br.com.drivenation.motors.service;
 
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
+import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
+import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.entity.VehicleEntity;
 import br.com.drivenation.motors.repository.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @ApplicationScoped
@@ -39,5 +43,33 @@ public class VehicleServiceImpl implements VehicleService {
         log.info("Deleting vehicle with id: {}", id);
         vehicleRepository.deleteById(id);
         log.info("Vehicle deleted.");
+    }
+
+    @Override
+    public UpdateVehicleResponse updateVehicle(ObjectId id, UpdateVehicleRequest updateVehicleRequest) {
+        log.info("Finding vehicle with id: {}", id);
+        VehicleEntity vehicleEntity = Optional.ofNullable(vehicleRepository.findById(id)).orElseThrow(() -> {
+            log.error("Vehicle not found!");
+            return new NotFoundException();
+        });
+
+        log.info("Vehicle found.");
+        updateVehicle(updateVehicleRequest, vehicleEntity);
+
+        vehicleRepository.update(vehicleEntity);
+        log.info("Vehicle updated.");
+
+        return UpdateVehicleResponse.valueOf(vehicleEntity);
+    }
+
+    private void updateVehicle(UpdateVehicleRequest updateVehicleRequest, VehicleEntity vehicleEntity) {
+        log.info("Updating vehicle...");
+        vehicleEntity.setModel(Optional.ofNullable(updateVehicleRequest.getModel()).orElse(vehicleEntity.getModel()));
+        vehicleEntity.setYear(Optional.ofNullable(updateVehicleRequest.getYear()).orElse(vehicleEntity.getYear()));
+        vehicleEntity.setColor(Optional.ofNullable(updateVehicleRequest.getColor()).orElse(vehicleEntity.getColor()));
+        vehicleEntity.setManufacturer(Optional.ofNullable(updateVehicleRequest.getManufacturer()).orElse(vehicleEntity.getManufacturer()));
+        vehicleEntity.setChassisNumber(Optional.ofNullable(updateVehicleRequest.getChassisNumber()).orElse(vehicleEntity.getChassisNumber()));
+        vehicleEntity.setPrice(Optional.ofNullable(updateVehicleRequest.getPrice()).orElse(vehicleEntity.getPrice()));
+        vehicleEntity.setStatus(Optional.ofNullable(updateVehicleRequest.getStatus()).orElse(vehicleEntity.getStatus()));
     }
 }
