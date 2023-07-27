@@ -5,11 +5,14 @@ import br.com.drivenation.motors.enums.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.bson.types.ObjectId;
 
 @Data
 @Builder
 @AllArgsConstructor
 public class GetAllVehicleResponse {
+
+    private ObjectId id;
 
     private String model;
 
@@ -28,6 +31,7 @@ public class GetAllVehicleResponse {
 
     public static GetAllVehicleResponse valueOf(VehicleEntity vehicle) {
         return GetAllVehicleResponse.builder()
+                .id(vehicle.getId())
                 .model(vehicle.getModel())
                 .year(vehicle.getYear())
                 .color(vehicle.getColor())

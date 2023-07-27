@@ -21,7 +21,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void createVehicle(CreateVehicleRequest createVehicleRequest) {
         log.info("Creating vehicle: {} {}", createVehicleRequest.getManufacturer(), createVehicleRequest.getModel());
-        vehicleRepository.persist(createVehicleRequest.toEntity());
+        vehicleRepository.persist(VehicleEntity.valueOf(createVehicleRequest));
         log.info("Vehicle created.");
     }
 
