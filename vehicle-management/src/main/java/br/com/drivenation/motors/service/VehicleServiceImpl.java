@@ -6,6 +6,7 @@ import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
 import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.entity.VehicleEntity;
+import br.com.drivenation.motors.exception.ConflictException;
 import br.com.drivenation.motors.repository.VehicleRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -26,7 +27,11 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void createVehicle(CreateVehicleRequest createVehicleRequest) {
-        log.info("Creating vehicle: {} {}", createVehicleRequest.getManufacturer(), createVehicleRequest.getModel());
+        log.info("Creating vehicle with chassis number: {}", createVehicleRequest.getChassisNumber());
+        vehicleRepository.findByChassisNumber(createVehicleRequest.getChassisNumber()).ifPresent(vehicle -> {
+            log.error("A vehicle with chassis number {} already exists.", createVehicleRequest.getChassisNumber());
+            throw new ConflictException("A vehicle with chassis number already exists.");
+        });
         vehicleRepository.persist(VehicleEntity.valueOf(createVehicleRequest));
         log.info("Vehicle created.");
     }
