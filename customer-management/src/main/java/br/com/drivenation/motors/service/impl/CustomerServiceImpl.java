@@ -20,15 +20,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createCustomer(CreateCustomerRequest createCustomerRequest) {
-        try {
-            log.info("Creating customer: {}", createCustomerRequest.getFirstName());
-            customerRepository.persist(CustomerEntity.valueOf(createCustomerRequest));
-            log.info("Customer created.");
-        } catch (MongoWriteException e) {
-            if (e.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
-                log.error("A customer with document {} already exists.", createCustomerRequest.getDocument());
-                throw new ConflictException("A customer with document already exists.");
-            }
-        }
+        log.info("Creating customer with document: {}", createCustomerRequest.getDocument());
+        customerRepository.findByDocument(createCustomerRequest.getDocument()).ifPresent(customer -> {
+            log.error("A customer with document {} already exists.", createCustomerRequest.getDocument());
+            throw new ConflictException("A customer with document already exists.");
+        });
+        customerRepository.persist(CustomerEntity.valueOf(createCustomerRequest));
+        log.info("Customer created.");
     }
 }

@@ -1,6 +1,5 @@
 package br.com.drivenation.motors.exception;
 
-import jakarta.ws.rs.core.Response;
 import lombok.Getter;
 import org.jboss.resteasy.reactive.RestResponse;
 
