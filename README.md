@@ -58,8 +58,6 @@ The API documentation for each microservice is available via Swagger UI at the f
 
 http://localhost:<port>/swagger-ui/
 
-Replace <port> with the port at which the microservice is running.
-
 ## Author
 
 Gustavo Diniz
