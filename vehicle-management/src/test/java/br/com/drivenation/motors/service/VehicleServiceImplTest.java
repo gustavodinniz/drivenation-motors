@@ -3,7 +3,8 @@ package br.com.drivenation.motors.service;
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
 import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.entity.VehicleEntity;
-import br.com.drivenation.motors.enums.VehicleStatus;
+import br.com.drivenation.motors.enumeration.VehicleStatus;
+import br.com.drivenation.motors.exception.ConflictException;
 import br.com.drivenation.motors.repository.VehicleRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import io.quarkus.test.InjectMock;
@@ -41,6 +42,16 @@ class VehicleServiceImplTest {
         whenCreateVehicleCalled();
         thenExpectVehicleRepositoryPersistCalledOnce();
     }
+
+    @Test
+    void shouldNotCreateVehicleWhenChassisNumberAlreadyExists() {
+        givenCreateVehicleRequest();
+        givenVehicleRepositoryFindByChassisNumberReturnsOptionalOfVehicleEntity();
+        whenCreateVehicleThrowsConflictException();
+        thenExpectVehicleRepositoryFindByChassisNumberCalledOnce();
+        thenExpectVehicleRepositoryPersistNotCalled();
+    }
+
 
     @Test
     void shouldGetAllVehiclesSuccessfully() {
@@ -94,8 +105,11 @@ class VehicleServiceImplTest {
         thenExpectVehicleRepositoryFindByIdCalledOnce();
     }
 
-
     // given
+
+    private void givenVehicleRepositoryFindByChassisNumberReturnsOptionalOfVehicleEntity() {
+        when(vehicleRepository.findByChassisNumber(any())).thenReturn(java.util.Optional.of(VehicleEntity.builder().build()));
+    }
 
     private void givenVehicleRepositoryFindByIdReturnsNull() {
         doReturn(null).when(vehicleRepository).findById(any(ObjectId.class));
@@ -153,6 +167,10 @@ class VehicleServiceImplTest {
 
     // when
 
+    private void whenCreateVehicleThrowsConflictException() {
+        assertThrows(ConflictException.class, () -> vehicleService.createVehicle(createVehicleRequest));
+    }
+
     private void whenGetVehicleByIdThrowsNotFoundException() {
         assertThrows(NotFoundException.class, () -> vehicleService.getVehicleById(vehicleId));
     }
@@ -205,6 +223,14 @@ class VehicleServiceImplTest {
 
     private void thenExpectVehicleRepositoryUpdateNotCalled() {
         verify(vehicleRepository, never()).update(any(VehicleEntity.class));
+    }
+
+    private void thenExpectVehicleRepositoryPersistNotCalled() {
+        verify(vehicleRepository, never()).persist(any(VehicleEntity.class));
+    }
+
+    private void thenExpectVehicleRepositoryFindByChassisNumberCalledOnce() {
+        verify(vehicleRepository).findByChassisNumber(anyString());
     }
 
 }
