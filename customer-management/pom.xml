@@ -76,6 +76,70 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>CLASS</element>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+              <excludes>
+                <exclude>**/*Application.*</exclude>
+                <exclude>**/dto/**</exclude>
+                <exclude>**/enumeration/**</exclude>
+                <exclude>**/exception/**</exclude>
+                <exclude>**/entity/**</exclude>
+                <exclude>**/repository/*</exclude>
+                <exclude>**/configuration/**</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jacoco-report</id>
+            <phase>test</phase>
+            <configuration>
+              <excludes>
+                <exclude>**/*Application.*</exclude>
+                <exclude>**/dto/**</exclude>
+                <exclude>**/enumeration/**</exclude>
+                <exclude>**/exception/**</exclude>
+                <exclude>**/entity/**</exclude>
+                <exclude>**/repository/*</exclude>
+                <exclude>**/configuration/**</exclude>
+              </excludes>
+            </configuration>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus.platform.version}</version>
