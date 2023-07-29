@@ -15,6 +15,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -108,7 +109,7 @@ class VehicleServiceImplTest {
     // given
 
     private void givenVehicleRepositoryFindByChassisNumberReturnsOptionalOfVehicleEntity() {
-        when(vehicleRepository.findByChassisNumber(any())).thenReturn(java.util.Optional.of(VehicleEntity.builder().build()));
+        doReturn(Optional.of(VehicleEntity.builder().build())).when(vehicleRepository).findByChassisNumber(any());
     }
 
     private void givenVehicleRepositoryFindByIdReturnsNull() {
