@@ -2,5 +2,5 @@ package br.com.drivenation.motors.enumeration;
 
 public enum VehicleStatus {
 
-    NEW, USED, SOLD, UNDER_MAINTENANCE, TEST_DRIVE;
+    FOR_SALE, SOLD, MAINTENANCE, TEST_DRIVE, UNAVAILABLE;
 }

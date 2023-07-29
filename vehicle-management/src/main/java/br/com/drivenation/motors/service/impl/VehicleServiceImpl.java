@@ -101,5 +101,6 @@ public class VehicleServiceImpl implements VehicleService {
         vehicleEntity.setChassisNumber(Optional.ofNullable(updateVehicleRequest.getChassisNumber()).orElse(vehicleEntity.getChassisNumber()));
         vehicleEntity.setPrice(Optional.ofNullable(updateVehicleRequest.getPrice()).orElse(vehicleEntity.getPrice()));
         vehicleEntity.setStatus(Optional.ofNullable(updateVehicleRequest.getStatus()).orElse(vehicleEntity.getStatus()));
+        vehicleEntity.setOwnership(Optional.ofNullable(updateVehicleRequest.getOwnership()).orElse(vehicleEntity.getOwnership()));
     }
 }

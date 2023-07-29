@@ -10,7 +10,8 @@ db.vehicles.insertMany([
         "manufacturer": "Tesla",
         "chassisNumber": "5YJ3E1EA8JF123456",
         "price": 35000,
-        "status": "NEW"
+        "status": "FOR_SALE",
+        "ownership": "DEALERSHIP"
     },
     {
         "model": "Civic",
@@ -19,7 +20,8 @@ db.vehicles.insertMany([
         "manufacturer": "Honda",
         "chassisNumber": "2HGFA1F58AH678910",
         "price": 20000,
-        "status": "NEW"
+        "status": "FOR_SALE",
+        "ownership": "DEALERSHIP"
     },
     {
         "model": "Model 3",
@@ -28,7 +30,8 @@ db.vehicles.insertMany([
         "manufacturer": "Tesla",
         "chassisNumber": "5YJ3E1EA7KF368907",
         "price": 40000,
-        "status": "NEW"
+        "status": "FOR_SALE",
+        "ownership": "DEALERSHIP"
     },
     {
         "model": "Corolla",
@@ -37,7 +40,8 @@ db.vehicles.insertMany([
         "manufacturer": "Toyota",
         "chassisNumber": "2T1BURHE1KC192345",
         "price": 25000,
-        "status": "NEW"
+        "status": "FOR_SALE",
+        "ownership": "DEALERSHIP"
     },
     {
         "model": "Mustang",
@@ -46,6 +50,7 @@ db.vehicles.insertMany([
         "manufacturer": "Ford",
         "chassisNumber": "1FATP8UH3K5151234",
         "price": 45000,
-        "status": "NEW"
+        "status": "FOR_SALE",
+        "ownership": "DEALERSHIP"
     },
 ]);

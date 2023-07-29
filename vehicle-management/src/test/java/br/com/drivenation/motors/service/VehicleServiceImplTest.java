@@ -133,7 +133,7 @@ class VehicleServiceImplTest {
                 .manufacturer("Fiat")
                 .chassisNumber("123456789")
                 .price(10000.00)
-                .status(VehicleStatus.UNDER_MAINTENANCE)
+                .status(VehicleStatus.MAINTENANCE)
                 .build();
     }
 
@@ -163,7 +163,7 @@ class VehicleServiceImplTest {
                 .manufacturer("Fiat")
                 .chassisNumber("123456789")
                 .price(10000.00)
-                .status(VehicleStatus.UNDER_MAINTENANCE)
+                .status(VehicleStatus.MAINTENANCE)
                 .build();
     }
 

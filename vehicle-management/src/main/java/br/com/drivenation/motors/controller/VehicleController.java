@@ -58,7 +58,7 @@ public class VehicleController {
     @GET
     @Path("/chassis-number/{chassisNumber}")
     @ResponseStatus(200)
-    public GetVehicleByChassisNumberResponse getVehicleById(@PathParam("chassisNumber") String chassisNumber) {
+    public GetVehicleByChassisNumberResponse getVehicleByChassisNumber(@PathParam("chassisNumber") String chassisNumber) {
         return vehicleService.getVehicleByChassisNumber(chassisNumber);
     }
 }

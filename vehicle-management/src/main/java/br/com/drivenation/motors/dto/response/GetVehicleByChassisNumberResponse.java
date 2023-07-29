@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.dto.response;
 
 import br.com.drivenation.motors.entity.VehicleEntity;
+import br.com.drivenation.motors.enumeration.OwnershipStatus;
 import br.com.drivenation.motors.enumeration.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,8 @@ public class GetVehicleByChassisNumberResponse {
 
     private VehicleStatus status;
 
+    private OwnershipStatus ownership;
+
     public static GetVehicleByChassisNumberResponse valueOf(VehicleEntity vehicleEntity) {
         return GetVehicleByChassisNumberResponse.builder()
                 .model(vehicleEntity.getModel())
@@ -29,6 +32,7 @@ public class GetVehicleByChassisNumberResponse {
                 .chassisNumber(vehicleEntity.getChassisNumber())
                 .price(vehicleEntity.getPrice())
                 .status(vehicleEntity.getStatus())
+                .ownership(vehicleEntity.getOwnership())
                 .build();
     }
 }

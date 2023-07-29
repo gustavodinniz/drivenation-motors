@@ -33,10 +33,10 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     private void updateVehicleStatus(CreateMaintenanceRequest createMaintenanceRequest) {
         if (createMaintenanceRequest.getRequesterType().equals(RequesterType.DEALERSHIP)) {
             log.info("Maintenance requested by the dealership.");
-            log.info("Updating vehicle status with chassis number {}. Status: {}", createMaintenanceRequest.getVehicleChassisNumber(), VehicleStatus.UNDER_MAINTENANCE);
+            log.info("Updating vehicle status with chassis number {}. Status: {}", createMaintenanceRequest.getVehicleChassisNumber(), VehicleStatus.MAINTENANCE);
             vehicleRepository.findByChassisNumber(createMaintenanceRequest.getVehicleChassisNumber()).ifPresentOrElse(
                     vehicle -> {
-                        vehicle.setStatus(VehicleStatus.UNDER_MAINTENANCE);
+                        vehicle.setStatus(VehicleStatus.MAINTENANCE);
                         vehicleRepository.update(vehicle);
                         log.info("Vehicle status updated.");
                     },

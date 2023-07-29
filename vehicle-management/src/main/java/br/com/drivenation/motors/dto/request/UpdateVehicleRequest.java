@@ -1,5 +1,6 @@
 package br.com.drivenation.motors.dto.request;
 
+import br.com.drivenation.motors.enumeration.OwnershipStatus;
 import br.com.drivenation.motors.enumeration.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +24,6 @@ public class UpdateVehicleRequest {
     private Double price;
 
     private VehicleStatus status;
+
+    private OwnershipStatus ownership;
 }

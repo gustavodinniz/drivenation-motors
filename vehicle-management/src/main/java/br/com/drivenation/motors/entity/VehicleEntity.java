@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.entity;
 
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
+import br.com.drivenation.motors.enumeration.OwnershipStatus;
 import br.com.drivenation.motors.enumeration.VehicleStatus;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,8 @@ public class VehicleEntity {
 
     private VehicleStatus status;
 
+    private OwnershipStatus ownership;
+
     public static VehicleEntity valueOf(CreateVehicleRequest createVehicleRequest) {
         return VehicleEntity.builder()
                 .model(createVehicleRequest.getModel())
@@ -41,6 +44,7 @@ public class VehicleEntity {
                 .chassisNumber(createVehicleRequest.getChassisNumber())
                 .price(createVehicleRequest.getPrice())
                 .status(createVehicleRequest.getStatus())
+                .ownership(createVehicleRequest.getOwnership())
                 .build();
     }
 }

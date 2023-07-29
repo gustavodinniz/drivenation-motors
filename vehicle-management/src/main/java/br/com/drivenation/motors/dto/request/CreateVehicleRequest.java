@@ -1,5 +1,6 @@
 package br.com.drivenation.motors.dto.request;
 
+import br.com.drivenation.motors.enumeration.OwnershipStatus;
 import br.com.drivenation.motors.enumeration.VehicleStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,5 +33,8 @@ public class CreateVehicleRequest {
 
     @NotNull(message = "{400.000}")
     private VehicleStatus status;
+
+    @NotNull(message = "{400.000}")
+    private OwnershipStatus ownership;
 
 }
