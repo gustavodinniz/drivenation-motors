@@ -5,7 +5,7 @@ import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
 import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
-import br.com.drivenation.motors.enums.VehicleStatus;
+import br.com.drivenation.motors.enumeration.VehicleStatus;
 import br.com.drivenation.motors.service.VehicleService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
