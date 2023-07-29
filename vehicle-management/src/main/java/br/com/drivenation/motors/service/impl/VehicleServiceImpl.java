@@ -3,6 +3,7 @@ package br.com.drivenation.motors.service.impl;
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
 import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
+import br.com.drivenation.motors.dto.response.GetVehicleByChassisNumberResponse;
 import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.entity.VehicleEntity;
@@ -67,6 +68,18 @@ public class VehicleServiceImpl implements VehicleService {
     public GetVehicleByIdResponse getVehicleById(ObjectId id) {
         VehicleEntity vehicleEntity = findVehicleById(id);
         return GetVehicleByIdResponse.valueOf(vehicleEntity);
+    }
+
+    @Override
+    public GetVehicleByChassisNumberResponse getVehicleByChassisNumber(String chassisNumber) {
+        log.info("Finding vehicle with chassis number: {}", chassisNumber);
+        VehicleEntity vehicleEntity = vehicleRepository.findByChassisNumber(chassisNumber).orElseThrow(() -> {
+            log.error("Vehicle not found!");
+            return new NotFoundException();
+        });
+
+        log.info("Vehicle found.");
+        return GetVehicleByChassisNumberResponse.valueOf(vehicleEntity);
     }
 
     private VehicleEntity findVehicleById(ObjectId id) {

@@ -3,6 +3,7 @@ package br.com.drivenation.motors.service;
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
 import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
 import br.com.drivenation.motors.dto.response.GetAllVehicleResponse;
+import br.com.drivenation.motors.dto.response.GetVehicleByChassisNumberResponse;
 import br.com.drivenation.motors.dto.response.GetVehicleByIdResponse;
 import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import org.bson.types.ObjectId;
@@ -20,4 +21,6 @@ public interface VehicleService {
     UpdateVehicleResponse updateVehicle(ObjectId id, UpdateVehicleRequest updateVehicleRequest);
 
     GetVehicleByIdResponse getVehicleById(ObjectId id);
+
+    GetVehicleByChassisNumberResponse getVehicleByChassisNumber(String chassisNumber);
 }
