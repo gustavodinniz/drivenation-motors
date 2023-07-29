@@ -5,8 +5,6 @@ import br.com.drivenation.motors.entity.CustomerEntity;
 import br.com.drivenation.motors.exception.ConflictException;
 import br.com.drivenation.motors.repository.CustomerRepository;
 import br.com.drivenation.motors.service.CustomerService;
-import com.mongodb.ErrorCategory;
-import com.mongodb.MongoWriteException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;

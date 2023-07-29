@@ -1,6 +1,6 @@
 package br.com.drivenation.motors.dto.request;
 
-import br.com.drivenation.motors.enums.CustomerStatus;
+import br.com.drivenation.motors.enumeration.CustomerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

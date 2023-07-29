@@ -1,7 +1,7 @@
 package br.com.drivenation.motors.entity;
 
 import br.com.drivenation.motors.dto.request.CreateCustomerRequest;
-import br.com.drivenation.motors.enums.CustomerStatus;
+import br.com.drivenation.motors.enumeration.CustomerStatus;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package br.com.drivenation.motors.enums;
+package br.com.drivenation.motors.enumeration;
 
 public enum CustomerStatus {
 
