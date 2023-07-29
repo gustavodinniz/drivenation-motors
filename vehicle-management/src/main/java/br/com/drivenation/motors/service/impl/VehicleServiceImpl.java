@@ -1,4 +1,4 @@
-package br.com.drivenation.motors.service;
+package br.com.drivenation.motors.service.impl;
 
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
 import br.com.drivenation.motors.dto.request.UpdateVehicleRequest;
@@ -8,6 +8,7 @@ import br.com.drivenation.motors.dto.response.UpdateVehicleResponse;
 import br.com.drivenation.motors.entity.VehicleEntity;
 import br.com.drivenation.motors.exception.ConflictException;
 import br.com.drivenation.motors.repository.VehicleRepository;
+import br.com.drivenation.motors.service.VehicleService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
