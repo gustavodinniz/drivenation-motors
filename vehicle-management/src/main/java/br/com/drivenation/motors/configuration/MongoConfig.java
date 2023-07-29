@@ -1,4 +1,4 @@
-package br.com.drivenation.motors.config;
+package br.com.drivenation.motors.configuration;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;

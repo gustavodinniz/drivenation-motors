@@ -1,6 +1,6 @@
 package br.com.drivenation.motors.dto.request;
 
-import br.com.drivenation.motors.enums.VehicleStatus;
+import br.com.drivenation.motors.enumeration.VehicleStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

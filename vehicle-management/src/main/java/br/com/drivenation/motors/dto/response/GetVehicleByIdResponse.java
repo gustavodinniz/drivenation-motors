@@ -1,7 +1,7 @@
 package br.com.drivenation.motors.dto.response;
 
 import br.com.drivenation.motors.entity.VehicleEntity;
-import br.com.drivenation.motors.enums.VehicleStatus;
+import br.com.drivenation.motors.enumeration.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

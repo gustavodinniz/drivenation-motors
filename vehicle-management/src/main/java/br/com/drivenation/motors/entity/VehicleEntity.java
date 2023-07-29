@@ -1,7 +1,7 @@
 package br.com.drivenation.motors.entity;
 
 import br.com.drivenation.motors.dto.request.CreateVehicleRequest;
-import br.com.drivenation.motors.enums.VehicleStatus;
+import br.com.drivenation.motors.enumeration.VehicleStatus;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
