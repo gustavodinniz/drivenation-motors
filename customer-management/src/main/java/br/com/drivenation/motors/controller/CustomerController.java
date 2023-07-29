@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.controller;
 
 import br.com.drivenation.motors.dto.request.CreateCustomerRequest;
+import br.com.drivenation.motors.dto.response.GetAllCustomersResponse;
 import br.com.drivenation.motors.dto.response.GetCustomerByDocumentResponse;
 import br.com.drivenation.motors.service.CustomerService;
 import jakarta.inject.Inject;
@@ -9,6 +10,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import org.jboss.resteasy.reactive.ResponseStatus;
+
+import java.util.List;
 
 @Path("/customers")
 public class CustomerController {
@@ -27,5 +30,11 @@ public class CustomerController {
     @ResponseStatus(200)
     public GetCustomerByDocumentResponse getCustomerByDocument(@PathParam("document") String document) {
         return customerService.getCustomerByDocument(document);
+    }
+
+    @GET
+    @ResponseStatus(200)
+    public List<GetAllCustomersResponse> getAllCustomers() {
+        return customerService.getAllCustomers();
     }
 }

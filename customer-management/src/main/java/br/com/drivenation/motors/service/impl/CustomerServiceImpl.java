@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.service.impl;
 
 import br.com.drivenation.motors.dto.request.CreateCustomerRequest;
+import br.com.drivenation.motors.dto.response.GetAllCustomersResponse;
 import br.com.drivenation.motors.dto.response.GetCustomerByDocumentResponse;
 import br.com.drivenation.motors.entity.CustomerEntity;
 import br.com.drivenation.motors.exception.ConflictException;
@@ -11,6 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -41,5 +43,13 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.info("Customer found.");
         return GetCustomerByDocumentResponse.valueOf(customerEntity);
+    }
+
+    @Override
+    public List<GetAllCustomersResponse> getAllCustomers() {
+        log.info("Getting all customers");
+        List<CustomerEntity> customers = customerRepository.findAll().list();
+        log.info("Customers found: {}", customers.size());
+        return customers.stream().map(GetAllCustomersResponse::valueOf).toList();
     }
 }
