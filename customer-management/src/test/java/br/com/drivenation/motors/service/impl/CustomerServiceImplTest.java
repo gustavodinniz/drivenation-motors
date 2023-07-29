@@ -76,7 +76,6 @@ class CustomerServiceImplTest {
                         .country("Fakecountry")
                         .zipCode("123456")
                         .build())
-                .status(CustomerStatus.ACTIVE)
                 .build();
     }
 

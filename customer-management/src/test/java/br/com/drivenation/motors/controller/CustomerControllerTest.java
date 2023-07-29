@@ -54,7 +54,6 @@ class CustomerControllerTest {
                         .country("Fakecountry")
                         .zipCode("123456")
                         .build())
-                .status(CustomerStatus.ACTIVE)
                 .build();
     }
 

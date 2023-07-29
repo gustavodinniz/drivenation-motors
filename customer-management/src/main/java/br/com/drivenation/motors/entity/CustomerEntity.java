@@ -48,7 +48,7 @@ public class CustomerEntity {
                 .dateOfBirth(createCustomerRequest.getDateOfBirth())
                 .address(CustomerAddressEntity.valueOf(createCustomerRequest.getAddress()))
                 .registrationDate(new Date())
-                .status(createCustomerRequest.getStatus())
+                .status(CustomerStatus.ACTIVE)
                 .build();
     }
 }

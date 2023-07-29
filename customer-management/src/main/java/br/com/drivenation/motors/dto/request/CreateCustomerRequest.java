@@ -23,6 +23,4 @@ public class CreateCustomerRequest {
     private String dateOfBirth;
 
     private CreateCustomerAddressRequest address;
-
-    private CustomerStatus status;
 }
