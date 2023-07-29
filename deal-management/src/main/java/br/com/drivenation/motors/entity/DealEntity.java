@@ -2,6 +2,8 @@ package br.com.drivenation.motors.entity;
 
 import br.com.drivenation.motors.dto.request.CreateDealRequest;
 import br.com.drivenation.motors.enumeration.DealType;
+import br.com.drivenation.motors.enumeration.PaymentStatus;
+import br.com.drivenation.motors.enumeration.PaymentType;
 import br.com.drivenation.motors.enumeration.RequesterType;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
@@ -37,6 +39,10 @@ public class DealEntity {
 
     private Double price;
 
+    private PaymentType paymentType;
+
+    private PaymentStatus paymentStatus;
+
     private Date createdAt;
 
     public static DealEntity valueOf(CreateDealRequest createDealRequest) {
@@ -49,6 +55,8 @@ public class DealEntity {
                 .requesterName(createDealRequest.getRequesterName())
                 .requesterDocument(createDealRequest.getRequesterDocument())
                 .price(createDealRequest.getPrice())
+                .paymentType(createDealRequest.getPaymentType())
+                .paymentStatus(createDealRequest.getPaymentStatus())
                 .createdAt(new Date())
                 .build();
     }
