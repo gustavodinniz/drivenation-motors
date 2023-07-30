@@ -1,16 +1,14 @@
 # DriveNation Motors - Car Dealership Management System
 
-The DriveNation Motors project is a management system for a fictional car dealership. It consists of four microservices: Vehicle Management, Customer Management, Sales Management, and Data Export.
+The DriveNation Motors project is a management system for a fictional car dealership. It consists of four microservices: Vehicle Management, Customer Management, Deal Management.
 
 ## Microservices
 
-**Vehicle Management:** This microservice is responsible for managing the vehicle registration at the dealership.
+**Vehicle Management:** This microservice is responsible for managing the vehicle registration at the dealership and the maintenance history.
 
-**Customer Management:** This microservice is responsible for managing the customer registration at the dealership.
+**Customer Management:** This microservice is responsible for managing the customer registration at the dealership and the interaction history of each customer.
 
-**Sales Management:** This microservice is responsible for managing vehicle sales to customers.
-
-**Data Export:** This microservice is responsible for exporting data on vehicles, customers, and sales to CSV files.
+**Deal Management:** This microservice is responsible for transactions that can be of the following types: sales, purchases and vehicle maintenance.
 
 Each microservice is an independent Quarkus application that communicates with the other microservices via HTTP/REST.
 
@@ -20,6 +18,7 @@ Each microservice is an independent Quarkus application that communicates with t
 - Quarkus
 - RESTEasy JAX-RS
 - MongoDB with Panache
+- Apache Kafka
 - Apache Commons CSV
 - Swagger UI
 - JUnit 5
