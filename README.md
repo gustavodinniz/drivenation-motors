@@ -33,7 +33,7 @@ Each microservice is a separate Maven project and can be run independently.
 
 - Java 17
 - Maven
-- MongoDB
+- Docker
 
 ### Execution
 
