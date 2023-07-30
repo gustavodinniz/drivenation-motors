@@ -17,7 +17,8 @@ public class KafkaEvent {
 
     @Incoming("vehicle")
     public void receiveMaintenance(VehicleEventRequest vehicleEventRequest) {
-        log.info("Received vehicle: {}", vehicleEventRequest);
+        log.info("Received maintenance for vehicle with chassis number: {}",
+                vehicleEventRequest.getVehicleChassisNumber());
         maintenanceService.receiveMaintenance(vehicleEventRequest);
     }
 }
