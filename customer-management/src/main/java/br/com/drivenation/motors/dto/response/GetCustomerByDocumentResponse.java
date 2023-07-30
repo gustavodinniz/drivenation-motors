@@ -13,6 +13,8 @@ public class GetCustomerByDocumentResponse {
 
     private String firstName;
 
+    private String lastName;
+
     private String document;
 
     private String email;
@@ -24,6 +26,7 @@ public class GetCustomerByDocumentResponse {
     public static GetCustomerByDocumentResponse valueOf(CustomerEntity customerEntity) {
         return GetCustomerByDocumentResponse.builder()
                 .firstName(customerEntity.getFirstName())
+                .lastName(customerEntity.getLastName())
                 .document(customerEntity.getDocument())
                 .email(customerEntity.getEmail())
                 .phoneNumber(customerEntity.getPhoneNumber())
