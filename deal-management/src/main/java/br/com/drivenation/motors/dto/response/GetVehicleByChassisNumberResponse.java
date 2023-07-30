@@ -9,13 +9,10 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class GetAllVehicleResponse {
+public class GetVehicleByChassisNumberResponse {
+
 
     private String model;
-
-    private Integer year;
-
-    private String color;
 
     private String manufacturer;
 
@@ -26,4 +23,5 @@ public class GetAllVehicleResponse {
     private VehicleStatus status;
 
     private OwnershipStatus ownership;
+
 }

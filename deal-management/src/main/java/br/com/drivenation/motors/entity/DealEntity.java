@@ -47,12 +47,9 @@ public class DealEntity {
 
     public static DealEntity valueOf(CreateDealRequest createDealRequest) {
         return DealEntity.builder()
-                .vehicleModel(createDealRequest.getVehicleModel())
-                .vehicleManufacturer(createDealRequest.getVehicleManufacturer())
                 .vehicleChassisNumber(createDealRequest.getVehicleChassisNumber())
                 .type(createDealRequest.getType())
                 .requesterType(createDealRequest.getRequesterType())
-                .requesterName(createDealRequest.getRequesterName())
                 .requesterDocument(createDealRequest.getRequesterDocument())
                 .price(createDealRequest.getPrice())
                 .paymentType(createDealRequest.getPaymentType())
