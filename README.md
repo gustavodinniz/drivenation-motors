@@ -1,6 +1,6 @@
 # DriveNation Motors - Car Dealership Management System
 
-The DriveNation Motors project is a management system for a fictional car dealership. It consists of four microservices: Vehicle Management, Customer Management, Deal Management.
+The DriveNation Motors project is a management system for a fictional car dealership. It consists of three microservices: Vehicle Management, Customer Management, Deal Management.
 
 ## Microservices
 
