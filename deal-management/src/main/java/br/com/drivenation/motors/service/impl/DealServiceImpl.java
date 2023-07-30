@@ -4,11 +4,13 @@ import br.com.drivenation.motors.client.CustomerRestClient;
 import br.com.drivenation.motors.client.VehicleRestClient;
 import br.com.drivenation.motors.dto.request.CreateDealRequest;
 import br.com.drivenation.motors.dto.request.CreateMaintenanceRequest;
+import br.com.drivenation.motors.dto.request.VehicleEventRequest;
 import br.com.drivenation.motors.dto.response.GetCustomerByDocumentResponse;
 import br.com.drivenation.motors.dto.response.GetVehicleByChassisNumberResponse;
 import br.com.drivenation.motors.entity.DealEntity;
 import br.com.drivenation.motors.enumeration.*;
 import br.com.drivenation.motors.exception.BadRequestException;
+import br.com.drivenation.motors.message.KafkaEvent;
 import br.com.drivenation.motors.repository.DealRepository;
 import br.com.drivenation.motors.service.DealService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,6 +26,9 @@ public class DealServiceImpl implements DealService {
 
     @Inject
     DealRepository dealRepository;
+
+    @Inject
+    KafkaEvent kafkaEvent;
 
     @Inject
     @RestClient
@@ -44,29 +49,17 @@ public class DealServiceImpl implements DealService {
     public void createMaintenance(CreateMaintenanceRequest createMaintenanceRequest) {
         log.info("Creating maintenance for vehicle with chassis number: {}", createMaintenanceRequest.getVehicleChassisNumber());
         if (RequesterType.DEALERSHIP.equals(createMaintenanceRequest.getRequesterType())) {
-            log.info("Maintenance type: {}, Requester: {}", createMaintenanceRequest.getMaintenanceType(), createMaintenanceRequest.getRequesterType());
-            var vehicle = callVehicleRestClientGetVehicleByChassisNumber(createMaintenanceRequest.getVehicleChassisNumber());
-            if (!vehicle.getStatus().equals(VehicleStatus.FOR_SALE)) {
-                log.error("Vehicle with chassis number: {} not available, status: {}", createMaintenanceRequest.getVehicleChassisNumber(), vehicle.getStatus());
-                throw new BadRequestException("Vehicle not available.");
-            }
-            DealEntity dealEntity = buildDealershipMaintenanceDeal(createMaintenanceRequest, vehicle);
-            log.info("Saving deal type: {} for vehicle with chassis number: {}", DealType.MAINTENANCE, createMaintenanceRequest.getVehicleChassisNumber());
-            dealRepository.persist(dealEntity);
-            log.info("Deal saved.");
-
-            //@TODO - send event kafka to update vehicle status and insert maintenance
-
+            handleDealershipMaintenance(createMaintenanceRequest);
         } else {
             log.info("Maintenance type: {}, Requester: {}", createMaintenanceRequest.getMaintenanceType(), createMaintenanceRequest.getRequesterType());
             var customer = callCustomerRestClientGetCustomerByDocument(createMaintenanceRequest.getRequesterDocument());
+
             if (!CustomerStatus.ACTIVE.equals(customer.getStatus())) {
                 log.error("Customer with document: {} is not active, status: {}", createMaintenanceRequest.getRequesterDocument(), customer.getStatus());
                 throw new BadRequestException("Customer is not active.");
             }
 
             DealEntity dealEntity = buildCustomerMaintenanceDeal(createMaintenanceRequest, customer);
-
             log.info("Saving deal type: {} for vehicle with chassis number: {}", DealType.MAINTENANCE, createMaintenanceRequest.getVehicleChassisNumber());
             dealRepository.persist(dealEntity);
             log.info("Deal saved.");
@@ -74,6 +67,35 @@ public class DealServiceImpl implements DealService {
             //@TODO - send event kafka to save vehicle status and insert maintenance
         }
 
+    }
+
+    private void handleDealershipMaintenance(CreateMaintenanceRequest createMaintenanceRequest) {
+        log.info("Maintenance type: {}, Requester: {}", createMaintenanceRequest.getMaintenanceType(), createMaintenanceRequest.getRequesterType());
+        var vehicle = callVehicleRestClientGetVehicleByChassisNumber(createMaintenanceRequest.getVehicleChassisNumber());
+
+        if (!vehicle.getStatus().equals(VehicleStatus.FOR_SALE)) {
+            log.error("Vehicle with chassis number: {} not available, status: {}", createMaintenanceRequest.getVehicleChassisNumber(), vehicle.getStatus());
+            throw new BadRequestException("Vehicle not available.");
+        }
+
+        DealEntity dealEntity = buildDealershipMaintenanceDeal(createMaintenanceRequest, vehicle);
+        log.info("Saving deal type: {} for vehicle with chassis number: {}", DealType.MAINTENANCE, createMaintenanceRequest.getVehicleChassisNumber());
+        dealRepository.persist(dealEntity);
+        log.info("Deal saved.");
+
+        kafkaEvent.sendVehicleKafkaEvent(buildDealershipMaintenanceEvent(createMaintenanceRequest, vehicle, dealEntity));
+    }
+
+    private VehicleEventRequest buildDealershipMaintenanceEvent(CreateMaintenanceRequest createMaintenanceRequest, GetVehicleByChassisNumberResponse vehicle, DealEntity dealEntity) {
+        return VehicleEventRequest.builder()
+                .vehicleModel(vehicle.getModel())
+                .vehicleManufacturer(vehicle.getManufacturer())
+                .vehicleChassisNumber(vehicle.getChassisNumber())
+                .maintenanceType(createMaintenanceRequest.getMaintenanceType())
+                .requesterType(createMaintenanceRequest.getRequesterType())
+                .requesterName(dealEntity.getRequesterName())
+                .requesterDocument(dealEntity.getRequesterDocument())
+                .build();
     }
 
     private DealEntity buildCustomerMaintenanceDeal(CreateMaintenanceRequest createMaintenanceRequest, GetCustomerByDocumentResponse customer) {
