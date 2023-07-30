@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.entity;
 
 import br.com.drivenation.motors.dto.request.CreateMaintenanceRequest;
+import br.com.drivenation.motors.dto.request.VehicleEventRequest;
 import br.com.drivenation.motors.enumeration.MaintenanceStatus;
 import br.com.drivenation.motors.enumeration.RequesterType;
 import br.com.drivenation.motors.enumeration.MaintenanceType;
@@ -54,7 +55,22 @@ public class MaintenanceEntity {
                 .requesterType(createMaintenanceRequest.getRequesterType())
                 .requesterName(createMaintenanceRequest.getRequesterName())
                 .requesterDocument(createMaintenanceRequest.getRequesterDocument())
-                .price(createMaintenanceRequest.getPrice())
+                .price(createMaintenanceRequest.getMaintenanceType().getPrice())
+                .entryDate(new Date())
+                .status(MaintenanceStatus.IN_PROGRESS)
+                .build();
+    }
+
+    public static MaintenanceEntity valueOf(VehicleEventRequest vehicleEventRequest) {
+        return MaintenanceEntity.builder()
+                .vehicleModel(vehicleEventRequest.getVehicleModel())
+                .vehicleManufacturer(vehicleEventRequest.getVehicleManufacturer())
+                .vehicleChassisNumber(vehicleEventRequest.getVehicleChassisNumber())
+                .maintenanceType(vehicleEventRequest.getMaintenanceType())
+                .requesterType(vehicleEventRequest.getRequesterType())
+                .requesterName(vehicleEventRequest.getRequesterName())
+                .requesterDocument(vehicleEventRequest.getRequesterDocument())
+                .price(vehicleEventRequest.getMaintenanceType().getPrice())
                 .entryDate(new Date())
                 .status(MaintenanceStatus.IN_PROGRESS)
                 .build();

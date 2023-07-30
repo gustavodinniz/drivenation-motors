@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.service.impl;
 
 import br.com.drivenation.motors.dto.request.CreateMaintenanceRequest;
+import br.com.drivenation.motors.dto.request.VehicleEventRequest;
 import br.com.drivenation.motors.entity.MaintenanceEntity;
 import br.com.drivenation.motors.enumeration.RequesterType;
 import br.com.drivenation.motors.enumeration.VehicleStatus;
@@ -27,20 +28,29 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         maintenanceRepository.persist(MaintenanceEntity.valueOf(createMaintenanceRequest));
         log.info("Maintenance created.");
 
-        updateVehicleStatus(createMaintenanceRequest);
+        updateVehicleStatus(createMaintenanceRequest.getVehicleChassisNumber(), createMaintenanceRequest.getRequesterType());
     }
 
-    private void updateVehicleStatus(CreateMaintenanceRequest createMaintenanceRequest) {
-        if (createMaintenanceRequest.getRequesterType().equals(RequesterType.DEALERSHIP)) {
+    @Override
+    public void receiveMaintenance(VehicleEventRequest vehicleEventRequest) {
+        log.info("Receiving maintenance for vehicle with chassis number: {}", vehicleEventRequest.getVehicleChassisNumber());
+        maintenanceRepository.persist(MaintenanceEntity.valueOf(vehicleEventRequest));
+        log.info("Maintenance created.");
+
+        updateVehicleStatus(vehicleEventRequest.getVehicleChassisNumber(), vehicleEventRequest.getRequesterType());
+    }
+
+    private void updateVehicleStatus(String chassisNumber, RequesterType requesterType) {
+        if (requesterType.equals(RequesterType.DEALERSHIP)) {
             log.info("Maintenance requested by the dealership.");
-            log.info("Updating vehicle status with chassis number {}. Status: {}", createMaintenanceRequest.getVehicleChassisNumber(), VehicleStatus.MAINTENANCE);
-            vehicleRepository.findByChassisNumber(createMaintenanceRequest.getVehicleChassisNumber()).ifPresentOrElse(
+            log.info("Updating vehicle status with chassis number {}. Status: {}", chassisNumber, VehicleStatus.MAINTENANCE);
+            vehicleRepository.findByChassisNumber(chassisNumber).ifPresentOrElse(
                     vehicle -> {
                         vehicle.setStatus(VehicleStatus.MAINTENANCE);
                         vehicleRepository.update(vehicle);
                         log.info("Vehicle status updated.");
                     },
-                    () -> log.error("Vehicle with chassis number {} not found.", createMaintenanceRequest.getVehicleChassisNumber()));
+                    () -> log.error("Vehicle with chassis number {} not found.", chassisNumber));
         }
     }
 }
