@@ -1,6 +1,7 @@
 package br.com.drivenation.motors.entity;
 
 import br.com.drivenation.motors.dto.request.CreateInteractionRequest;
+import br.com.drivenation.motors.dto.request.CustomerEventRequest;
 import br.com.drivenation.motors.enumeration.InteractionType;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,22 @@ public class InteractionEntity {
                 .vehicleModel(createInteractionRequest.getVehicleModel())
                 .vehicleManufacturer(createInteractionRequest.getVehicleManufacturer())
                 .vehicleChassisNumber(createInteractionRequest.getVehicleChassisNumber())
+                .date(new Date())
+                .build();
+    }
+
+    public static InteractionEntity valueOf(CustomerEventRequest customerEventRequest) {
+        return InteractionEntity.builder()
+                .customerFirstName(customerEventRequest.getCustomerFirstName())
+                .customerLastName(customerEventRequest.getCustomerLastName())
+                .customerDocument(customerEventRequest.getCustomerDocument())
+                .customerEmail(customerEventRequest.getCustomerEmail())
+                .customerPhoneNumber(customerEventRequest.getCustomerPhoneNumber())
+                .type(InteractionType.MAINTENANCE)
+                .price(customerEventRequest.getPrice())
+                .vehicleModel(customerEventRequest.getVehicleModel())
+                .vehicleManufacturer(customerEventRequest.getVehicleManufacturer())
+                .vehicleChassisNumber(customerEventRequest.getVehicleChassisNumber())
                 .date(new Date())
                 .build();
     }
