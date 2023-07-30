@@ -26,6 +26,10 @@ public class InteractionEntity {
 
     private String customerDocument;
 
+    private String customerEmail;
+
+    private String customerPhoneNumber;
+
     private InteractionType type;
 
     private Double price;
@@ -43,6 +47,8 @@ public class InteractionEntity {
                 .customerFirstName(createInteractionRequest.getCustomerFirstName())
                 .customerLastName(createInteractionRequest.getCustomerLastName())
                 .customerDocument(createInteractionRequest.getCustomerDocument())
+                .customerEmail(createInteractionRequest.getCustomerEmail())
+                .customerPhoneNumber(createInteractionRequest.getCustomerPhoneNumber())
                 .type(createInteractionRequest.getType())
                 .price(createInteractionRequest.getPrice())
                 .vehicleModel(createInteractionRequest.getVehicleModel())

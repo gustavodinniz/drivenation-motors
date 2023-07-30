@@ -21,6 +21,12 @@ public class CreateInteractionRequest {
     @NotBlank(message = "{400.000}")
     private String customerDocument;
 
+    @NotBlank(message = "{400.000}")
+    private String customerEmail;
+
+    @NotBlank(message = "{400.000}")
+    private String customerPhoneNumber;
+
     @NotNull(message = "{400.000}")
     private InteractionType type;
 
