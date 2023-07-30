@@ -5,10 +5,11 @@ import br.com.drivenation.motors.enumeration.RequesterType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
 @Builder
-//@Jacksonized
+@Jacksonized
 @AllArgsConstructor
 public class VehicleEventRequest {
 
